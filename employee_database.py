@@ -14,6 +14,10 @@ cursor.execute("""
         salary REAl
     )
 """)
+cursor.execute("PRAGMA table_info(employees)")
+columns = cursor.fetchall()
+for column in columns:
+    print(column)
 
 cursor.execute("""
     INSERT INTO employees (name, title, salary)
@@ -24,11 +28,23 @@ cursor.execute("""
     )
 """)
 
+cursor.executemany("""
+    INSERT INTO employees (name, title, salary)
+    VALUES (?, ?, ?)
+    """, [
+        ("Sarah Williams", "Data Analyst", 92000),
+        ("David Chen", "Backend Developer", 105000),
+        ("Emily Rodriguez", "Cybersecurity Analyst", 98000),
+        ("James Wilson", "Software Engineer", 115000),
+        ("Olivia Martinez", "Database Admin", 88000)
+    ])
+
 conn.commit()
 
 cursor.execute("SELECT * FROM employees")
-employee = cursor.fetchone()
+employees = cursor.fetchall()
 
-print(employee)
+for employee in employees:
+    print(employee)
 
 conn.close()

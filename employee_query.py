@@ -10,6 +10,9 @@ cursor = conn.cursor()
 cursor.execute("""
     SELECT name, title
     FROM employees
+    Where salary IS NOT NULL
+    ORDER BY salary DESC
+    LIMIT 3
 """)
 
 employees = cursor.fetchall()
