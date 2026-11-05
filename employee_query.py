@@ -8,11 +8,10 @@ conn = sqlite3.connect("company.db")
 cursor = conn.cursor()
 
 cursor.execute("""
-    SELECT name, title
+    SELECT COUNT(*), title
     FROM employees
-    Where salary IS NOT NULL
-    ORDER BY salary DESC
-    LIMIT 3
+    GROUP BY title
+    ORDER BY COUNT(*) DESC
 """)
 
 employees = cursor.fetchall()
